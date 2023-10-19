@@ -1,24 +1,42 @@
 import React from 'react';
 import Button from '../Button';
-import Toast from '../Toast';
+import ToastShelf from '../ToastShelf';
 import styles from './ToastPlayground.module.css';
-import useToggle from '../../hooks/use-toggle';
 
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
 function ToastPlayground() {
   const [message, setMessage] = React.useState('');
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
-  const [isOpen, toggleIsOpen] = useToggle(false);
+  const [toasts, setToasts] = React.useState([]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    toggleIsOpen(true);
+    addToast({
+      variant,
+      message
+    });
   }
 
-  function handleDismiss(event) {
-    event.preventDefault();
-    toggleIsOpen(false);
+  function addToast({ variant, message }) {
+    const newToasts = [
+      ...toasts,
+      {
+        id: crypto.randomUUID(),
+        variant,
+        message
+      }];
+
+    setToasts(newToasts);
+    setMessage('');
+    setVariant(VARIANT_OPTIONS[0]);
+  }
+
+  function removeToast(id) {
+    const newToasts = toasts.filter((toast) => {
+      return toast.id !== id;
+    });
+    setToasts(newToasts);
   }
 
   return (
@@ -28,14 +46,7 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      {isOpen &&
-        <Toast
-          handleDismiss={handleDismiss}
-          variant={variant}
-        >
-          {message}
-        </Toast>
-      }
+      <ToastShelf toasts={toasts} handleDismiss={removeToast} />
 
       <main>
         <div className={styles.controlsWrapper}>
