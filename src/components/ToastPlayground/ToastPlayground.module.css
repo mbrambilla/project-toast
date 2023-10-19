@@ -57,6 +57,13 @@
   min-height: 3rem;
 }
 
+fieldset.row {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
 .row:not(:last-of-type) {
   padding-bottom: 16px;
   border-bottom: 1px dotted hsl(250deg 80% 80% / 0.5);
@@ -82,6 +89,18 @@
   flex-basis: 160px;
   text-align: right;
   font-weight: 700;
+}
+
+legend.label {
+  float: left;
+  padding: 0;
+  margin-bottom: 0;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: normal;
+}
+legend.label + * {
+  clear: left;
 }
 
 .inputWrapper {
