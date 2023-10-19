@@ -1,3 +1,10 @@
 {
-  "extends": "react-app"
+  "extends": "react-app",
+  "rules": {
+    "indent": ["error", 2, {
+        "SwitchCase": 1
+      }],
+    "no-unused-vars": "off",
+    "semi": ["error", "always"]
+  }
 }
